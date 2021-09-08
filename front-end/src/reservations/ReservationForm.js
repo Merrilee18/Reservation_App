@@ -48,12 +48,12 @@ function ReservationForm() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formFields);
+    console.log(typeof formFields.reservation_date);
     e.preventDefault();
     if (validateReservation()) {
       await createReservation(formFields)
         .then((output) =>
-          history.push(`/dashboard?date=${formFields.reservation_date}`)
+          history.push(`/dashboard?date=${formFields.people}`)
         )
         .catch(errors);
     }
@@ -114,7 +114,7 @@ function ReservationForm() {
                   onChange={(e) =>
                     setFormFields({
                       ...formFields,
-                      mobile_number: e.target.value,
+                      mobile_number: Number(e.target.value),
                     })
                   }
                 />
@@ -170,7 +170,7 @@ function ReservationForm() {
                   name="number"
                   type="number"
                   onChange={(e) =>
-                    setFormFields({ ...formFields, people: e.target.value })
+                    setFormFields({ ...formFields, people: Number(e.target.value) })
                   }
                 />
               </div>
