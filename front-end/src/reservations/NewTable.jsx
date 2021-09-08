@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { createTable } from "../utils/api";
+import { today } from "../utils/date-time";
 
 function NewTable(){
 
-    function handleSubmit() {
-        alert("Ya submitted")
-    }
+    const history = useHistory();
+
+    async function handleSubmit(e) {
+            console.log(formFields);
+            e.preventDefault();
+              await createTable(formFields)
+                .then((output) =>
+                  history.push(`/dashboard?date=${today()}`)
+                )
+                // .catch(errors);
+            }
 
     function handleCancel() {
         alert("ya cancelled")
@@ -12,9 +23,7 @@ function NewTable(){
 
     const [formFields, setFormFields] = useState({
         table_name: "",
-        reservation_id: "",
-        capacity: "",
-
+        capacity: 0,
       });
 
     return (
@@ -26,17 +35,17 @@ function NewTable(){
             <form onSubmit={handleSubmit} method="post">
               {/* {errorList()} */}
               <div className="form-group">
-                <label className="control-label requiredField" htmlFor="name">
+                <label className="control-label requiredField" htmlFor="tableName">
                   Table Name
                   <span className="asteriskField">*</span>
                 </label>
                 <input
                   className="form-control"
-                  id="first_name"
-                  name="name"
+                  id="tableName"
+                  name="tableName"
                   type="text"
                   onChange={(e) =>
-                    setFormFields({ ...formFields, first_name: e.target.value })
+                    setFormFields({ ...formFields, table_name: e.target.value })
                   }
                 />
               </div>
@@ -47,11 +56,11 @@ function NewTable(){
                 </label>
                 <input
                   className="form-control"
-                  id="last_name"
+                  id="number"
                   name="name1"
-                  type="text"
+                  type="number"
                   onChange={(e) =>
-                    setFormFields({ ...formFields, last_name: e.target.value })
+                    setFormFields({ ...formFields, capacity: Number(e.target.value) })
                   }
                 />
               </div>
