@@ -18,9 +18,8 @@ function ReservationForm() {
   const validateReservation = () => {
     const errorsArr = [];
     const today = new Date();
-    const resDate = new Date(formFields.reservation_date);
+    const resDate = new Date(`${formFields.reservation_date}T${formFields.reservation_time}`);
     const resTime = formFields.reservation_time;
-    console.log(resTime);
 
     if (resDate < today) {
       errorsArr.push({ message: "Please pick a future date" });
@@ -49,10 +48,10 @@ function ReservationForm() {
   };
 
   const handleSubmit = async (e) => {
-    console.log("ya submitted");
+    console.log(formFields);
     e.preventDefault();
     if (validateReservation()) {
-      createReservation(formFields)
+      await createReservation(formFields)
         .then((output) =>
           history.push(`/dashboard?date=${formFields.reservation_date}`)
         )
@@ -79,7 +78,7 @@ function ReservationForm() {
                 </label>
                 <input
                   className="form-control"
-                  id="name"
+                  id="first_name"
                   name="name"
                   type="text"
                   onChange={(e) =>
@@ -94,7 +93,7 @@ function ReservationForm() {
                 </label>
                 <input
                   className="form-control"
-                  id="name1"
+                  id="last_name"
                   name="name1"
                   type="text"
                   onChange={(e) =>
@@ -108,7 +107,7 @@ function ReservationForm() {
                 </label>
                 <input
                   className="form-control"
-                  id="tel"
+                  id="mobile_number"
                   name="tel"
                   placeholder="000-000-0000"
                   type="text"
@@ -127,10 +126,10 @@ function ReservationForm() {
                 </label>
                 <input
                   className="form-control"
-                  id="date"
+                  id="reservation_date"
                   name="date"
                   placeholder="MM-DD-YYYY"
-                  type="text"
+                  type="date"
                   onChange={(e) =>
                     setFormFields({
                       ...formFields,
@@ -150,7 +149,7 @@ function ReservationForm() {
                 </label>
                 <input
                   type="time"
-                  id="inputMDEx1"
+                  id="reservation_time"
                   className="form-control"
                   onChange={(e) =>
                     setFormFields({
@@ -167,7 +166,7 @@ function ReservationForm() {
                 </label>
                 <input
                   className="form-control"
-                  id="number"
+                  id="people"
                   name="number"
                   type="number"
                   onChange={(e) =>

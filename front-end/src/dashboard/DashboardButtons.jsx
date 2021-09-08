@@ -22,7 +22,7 @@ function DashboardButtons({ selectedDate, setSelectedDate, date }) {
   }
 
   return (
-    <>
+    <div className="pt-3">
     {/* Today button */}
       <button
         onClick={handleToday}
@@ -44,7 +44,7 @@ function DashboardButtons({ selectedDate, setSelectedDate, date }) {
         Next Date
         <span className="oi oi-arrow-right ml-3"></span>
       </button>
-    </>
+    </div>
   );
 }
 

@@ -7,7 +7,9 @@ import { today } from "../utils/date-time";
 import NewReservation from "../reservations/NewReservation";
 import EditReservation from "../reservations/EditReservation";
 import useQuery from "../utils/useQuery";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
+import ReservationSearch from "../reservations/ReservationSearch";
+import NewTable from "../reservations/NewTable";
 
 /**
  * Defines all the routes for the application.
@@ -22,6 +24,8 @@ function Routes() {
   const date = query.get("date");
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
   useEffect(loadDashboard, [date]);
 
   function loadReservations() {
@@ -31,6 +35,13 @@ function Routes() {
       .catch(setReservationsError);
   }
 
+  function loadTables(){
+    setTablesError(null);
+    return listTables({ date })
+      .then(setTables)
+      .catch(setTablesError);
+  }
+
   
   function loadDashboard() {
     const abortController = new AbortController();
@@ -38,8 +49,13 @@ function Routes() {
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setTablesError);
     return () => abortController.abort();
   }
+  
+  
 
   return (
     <Switch>
@@ -48,6 +64,9 @@ function Routes() {
       </Route>
       <Route path="/reservations/:reservation_id/edit">
         <EditReservation loadReservations={loadReservations} />
+      </Route>
+      <Route exact path ="/search">
+        <ReservationSearch />
       </Route>
       <Route path = "/reservations/new">
         <NewReservation />
@@ -61,7 +80,13 @@ function Routes() {
           reservations={reservations}
           reservationsError={reservationsError}
           loadReservations={loadReservations} 
+          loadTables={loadTables}
+          tablesError={tablesError}
+          tables={tables}
         />
+      </Route>
+      <Route path = "/tables/new">
+        <NewTable />
       </Route>
 
 

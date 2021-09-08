@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import DashboardButtons from "./DashboardButtons";
-import ListDailyReservations from "../reservations/ListDailyReservations"
+import ListDailyReservations from "../reservations/ListDailyReservations";
+import ListTables from "../reservations/ListTables";
 
 /**
  * Defines the dashboard page.
@@ -13,7 +14,9 @@ function Dashboard({
   date,
   reservations,
   reservationsError,
-  loadReservations
+  loadReservations,
+  tablesError,
+  tables
 }) {
   // const [reservations, setReservations] = useState([]);
   // const [reservationsError, setReservationsError] = useState(null);
@@ -21,7 +24,7 @@ function Dashboard({
 
   return (
     <main>
-      <h1 className="libreFont">Dashboard</h1>
+      <h1 className="pb-3 libreFont">Dashboard</h1>
 
       {/* buttons for navigating through the reservation dates */}
       <DashboardButtons
@@ -31,7 +34,8 @@ function Dashboard({
       />
 
       <div className="d-md-flex m-3">
-        <h4 className="mb-0">Reservations for {date}</h4>
+        <br />
+        <h4 className="montFont">Reservations for {date}</h4>
       </div>
 
 
@@ -40,10 +44,13 @@ function Dashboard({
       <div>
         {(reservations.length === 0) ? (
           <div className="d-md-flex m-3">
-            <h4 className="mb-0">No reservations to show</h4>
+            <h3 className="montFont">No reservations to show</h3>
           </div>
         ) :
         <ListDailyReservations reservations={reservations} /> }
+      </div>
+      <div>
+        <ListTables tables={tables} />
       </div>
       <ErrorAlert error={reservationsError} />
       {/* This error is getting thrown when dashboard is initially loaded. Why? */}
