@@ -12,7 +12,7 @@ function ReservationForm() {
     mobile_number: "",
     reservation_date: "",
     reservation_time: "",
-    people: 0,
+    people: "",
   });
 
   const validateReservation = () => {
@@ -47,8 +47,8 @@ function ReservationForm() {
     return errors.map((err, index) => <ErrorAlert key={index} error={err} />);
   };
 
+
   const handleSubmit = async (e) => {
-    console.log(typeof formFields.reservation_date);
     e.preventDefault();
     if (validateReservation()) {
       await createReservation(formFields)
@@ -60,6 +60,7 @@ function ReservationForm() {
   };
 
   function handleCancel() {
+    alert("Are you sure you want to cancel?")
     history.push("/dashboard");
   }
 

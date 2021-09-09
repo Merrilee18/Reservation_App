@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   createReservation,
-  getReservationById
+  getReservationById,
+  updateReservation
 } from "../utils/api";
 import  formatReservationDate from "../utils/format-reservation-date";
 import formatReservationTime from "../utils/format-reservation-time";
@@ -12,14 +13,13 @@ function EditReservation() {
   const [errors, setErrors] = useState(null);
   const history = useHistory();
   const { reservation_id } = useParams();
-  console.log(reservation_id)
   const [formFields, setFormFields] = useState({
     first_name: "",
     last_name: "",
     mobile_number: "",
     reservation_date: "",
     reservation_time: "",
-    people: 0,
+    people: "",
   });
 
   useEffect(() => {
@@ -34,6 +34,7 @@ function EditReservation() {
         reservation_date: reservation.reservation_date,
         reservation_time: reservation.reservation_time,
         people: reservation.people,
+        reservation_id: reservation.reservation_id
       });
     })
     .catch(setErrors)
@@ -44,7 +45,6 @@ function EditReservation() {
     const today = new Date();
     const resDate = new Date(formFields.reservation_date);
     const resTime = formFields.reservation_time;
-    console.log(resTime);
 
     if (resDate < today) {
       errorsArr.push({ message: "Please pick a future date" });
@@ -79,7 +79,7 @@ function EditReservation() {
 
     if (!foundErrors.length) {
       const abortController = new AbortController();
-      createReservation(formFields, abortController.signal)
+      updateReservation(formFields, abortController.signal)
         .then((output) =>
           history.push(`/dashboard?date=${formFields.reservation_date}`)
         )
@@ -89,6 +89,7 @@ function EditReservation() {
   }
 
   function handleCancel() {
+    alert("Are you sure you want to cancel?")
     history.push(`/dashboard?date=${formFields.reservation_date}`);
   }
   return (
@@ -172,7 +173,7 @@ function EditReservation() {
                   id="date"
                   name="date"
                   placeholder="MM-DD-YYYY"
-                  type="text"
+                  type="date"
                   defaultValue={formFields.reservation_date}
                   onChange={(e) =>
                     setFormFields({
@@ -213,7 +214,7 @@ function EditReservation() {
                   className="form-control"
                   id="number"
                   name="number"
-                  type="text"
+                  type="number"
                   defaultValue={formFields.people}
                   onChange={(e) =>
                     setFormFields({ ...formFields, people: e.target.value })

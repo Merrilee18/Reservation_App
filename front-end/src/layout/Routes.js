@@ -10,6 +10,7 @@ import useQuery from "../utils/useQuery";
 import { listReservations, listTables } from "../utils/api";
 import ReservationSearch from "../reservations/ReservationSearch";
 import NewTable from "../reservations/NewTable";
+import SeatReservation from "../reservations/SeatReservation";
 
 /**
  * Defines all the routes for the application.
@@ -67,6 +68,9 @@ function Routes() {
       </Route>
       <Route exact path ="/search">
         <ReservationSearch />
+      </Route>
+      <Route path="/reservations/:reservation_id/seat">
+        <SeatReservation tables={tables} />
       </Route>
       <Route path = "/reservations/new">
         <NewReservation />

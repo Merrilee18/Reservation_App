@@ -18,7 +18,8 @@ function NewTable(){
             }
 
     function handleCancel() {
-        alert("ya cancelled")
+        alert("Are you sure you want to cancel?")
+        history.push(`/dashboard?date=${today()}`)
     }
 
     const [formFields, setFormFields] = useState({

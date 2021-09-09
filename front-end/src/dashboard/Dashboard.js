@@ -49,6 +49,7 @@ function Dashboard({
         ) :
         <ListDailyReservations reservations={reservations} /> }
       </div>
+      <h3 className="montFont">Tables</h3>
       <div>
         <ListTables tables={tables} />
       </div>
