@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function ListDailyReservations({ reservations }) {
+
+  function clearTableHandler(){
+    alert("ya cleared")
+  }
+
   let reservationList = reservations.map((res) => {
     return (
       <ul key={res.reservation_id}>
@@ -18,23 +23,26 @@ function ListDailyReservations({ reservations }) {
         <div className="row">
           <div className="col">
             <Link to={`reservations/${res.reservation_id}/edit`}>
+              {res.status !== "seated" ?
               <button className="btn btn-success mr-4 mt-4">
                 Update Reservation
-              </button>
+              </button> : <></> }
             </Link>
             <Link to={`/reservations/${res.reservation_id}/seat`}>
-            <button
-              href={`/reservations/${res.reservation_id}/seat`}
-              className="btn btn-info mt-4 mr-4"
-            >
-              Seat Reservation
-            </button>
+              {res.status !== "seated" ?
+                          <button
+                          href={`/reservations/${res.reservation_id}/seat`}
+                          className="btn btn-info mt-4 mr-4"
+                        >
+                          Seat Reservation
+                        </button> : <></> }
+
           </Link>
+            {res.status === "seated" ? 
+            <button onClick={clearTableHandler} className="btn btn-danger mt-4">Clear Table</button> : <></>
+          }
           </div>
           <div className="col text-right">
-            {/* <button className="btn btn-danger mt-4" onClick={handleDelete}>
-                  <span class="oi oi-trash"></span>
-                  </button> */}
           </div>
         </div>
         <hr></hr>

@@ -28,3 +28,9 @@ span li:before {
 .libreFont {
   font-family: 'Libre Caslon Display', serif
 }
+
+.tables {
+  overflow-y: scroll;
+  border: outset;
+  border-radius: 5px;
+}

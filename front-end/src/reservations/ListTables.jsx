@@ -3,15 +3,6 @@ import { Link } from "react-router-dom";
 import TableDetails from "./TableDetails";
 
 function ListTables({ tables }) {
-  function handleDelete() {
-    alert("ya deleted");
-  }
-
-  function handleSeat() {
-    alert("seat us please");
-  }
-
-  const reservation_id = 1;
 
   return (
     <div>
@@ -27,10 +18,6 @@ function ListTables({ tables }) {
               <li>
                 {`Status: ${table.reservation_id ? "Occupied" : "Available"}`}
               </li>
-
-              <button onClick={handleDelete} className="btn btn-danger mt-4">
-                Delete Table
-              </button>
               <hr />
             </div>
           );
